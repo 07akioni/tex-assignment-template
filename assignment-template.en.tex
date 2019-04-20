@@ -1,0 +1,414 @@
+\documentclass[acmlarge,screen]{acmart}
+\usepackage{CJKutf8}
+\usepackage{multicol}
+\usepackage{array, stackengine}
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{lstfiracode}
+
+\def\verbatim@nolig@list{}
+
+\setmonofont[
+  BoldFont={Fira Code Bold},
+  Contextuals=Alternate
+]{Fira Code}
+
+\lstset{
+	basicstyle=\linespread{1.11}\fontsize{9pt}{9pt}\ttfamily,
+	style=FiraCodeStyle,
+	keywordstyle=\bfseries,
+	breaklines=true,
+	% numbers=left
+}
+
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+\title{Assignment 2}
+\author{Zhang Lecong (1801213722)}
+\maketitle
+\section{Problem 4.17}
+\subsection{4.17(a)}
+\begin{multicols}{2}
+Euclid:
+\begin{align*}
+	gcd(2152, 764) &= gcd(754, 624)\\
+	&= gcd(624, 140)\\
+	&= gcd(140, 64)\\
+	&= gcd(64, 12)\\
+	&= gcd(12, 4)\\
+	&= gcd(4, 0)\\
+	&= 4
+\end{align*}
+\columnbreak \\
+Stein:
+\begin{align*}
+	A_1&=2152 & B_1&=764 & C_1&=1\\
+	A_2&=1076 & B_2&=382 & C_2&=2\\
+	A_3&=538 & B_3&=191 & C_3&=4\\
+	A_4&=269 & B_4&=191 & C_4&=4\\
+	A_5&=78 & B_5&=191 & C_5&=4\\
+	A_6&=39 & B_6&=191 & C_6&=4\\
+	A_7&=152 & B_7&=39 & C_7&=4\\
+	A_8&=76 & B_8&=39 & C_8&=4\\
+	A_9&=38 & B_9&=39 & C_9&=4\\
+	A_{10}&=1 & B_{10}&=38 & C_{10}&=4\\
+	A_{11}&=37 & B_{11}&=1 & C_{11}&=4\\
+	A_{12}&=36 & B_{12}&=1 & C_{12}&=4\\
+	A_{13}&=18 & B_{13}&=1 & C_{13}&=4\\
+	A_{14}&=9 & B_{14}&=1 & C_{14}&=4\\
+	A_{15}&=8 & B_{15}&=1 & C_{15}&=4\\
+	A_{16}&=4 & B_{16}&=1 & C_{16}&=4\\
+	A_{17}&=2 & B_{17}&=1 & C_{17}&=4\\
+	A_{18}&=1 & B_{18}&=1 & C_{18}&=4
+\end{align*}
+since $A_{18}=B_{18}$, $gcd(2152, 764)=A_{18}*C_{18}=4$
+\end{multicols}
+\subsection{4.17(b)}
+Compared with Euclid, Stein algorithm use less divisions but more subtractions and right shifts which are faster instructions for a CPU.
+\section{Problem 4.19}
+\subsection{4.19(a)}
+\begin{table}
+  \caption{4.19(a)}
+  \label{tab:4.19(a)}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i$&$q_i$&$u_i$&$v_i$\\
+    \midrule
+    $-1$&$4321$&&$1$&$0$\\
+    $0$&$1234$&&$0$&$1$\\
+	$1$&$619$&$3$&$1$&$-3$\\
+	$2$&$615$&$1$&$-1$&$4$\\
+	$3$&$4$&$1$&$2$&$-7$\\
+	$4$&$3$&$153$&$-307$&$1075$\\
+	$5$&$1$&$1$&$309$&$-1082$\\
+	$6$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+According to Table \ref{tab:4.19(a)}'s line whose $i=5$:
+\begin{align*}
+	309*4321-1082*1234=1\\
+	\Rightarrow-1082*1234\equiv1\ (\text{mod}\ 4321)\\
+	\Rightarrow3239*1234\equiv1\ (\text{mod}\ 4321)
+\end{align*}
+So the inverse element of 1234 is 3239.
+\subsection{4.19(b)}
+\begin{table}
+  \caption{4.19(b)}
+  \label{tab:4.19(b)}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i$&$q_i$&$u_i$&$v_i$\\
+    \midrule
+    $-1$&$40902$&&$1$&$0$\\
+    $0$&$24140$&&$0$&$1$\\
+	$1$&$16762$&$1$&$1$&$-1$\\
+	$2$&$7378$&$1$&$-1$&$2$\\
+	$3$&$2006$&$2$&$3$&$-5$\\
+	$4$&$1360$&$3$&$-10$&$17$\\
+	$5$&$646$&$1$&$13$&$-22$\\
+	$6$&$68$&$2$&$-36$&$61$\\
+	$7$&$34$&$9$&$337$&$-571$\\
+	$8$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+According to Table \ref{tab:4.19(b)}'s line whose $i=7$,
+\begin{align*}
+	337*40902-571*24140=34\\
+	\Rightarrow-571*24140\equiv34\ (\text{mod}\ 40902)\\
+	\Rightarrow40331*24140\equiv34\ (\text{mod}\ 40902)
+\end{align*}
+So $gcd(40902, 24140)=34$. Since $1$ is the identity element. The inverse element $x$ of $24140$ should satisfy
+\begin{align*}
+24140x\equiv1\ (\text{mod}\ 40902)	
+\end{align*}
+which means $gcd(40902, 24140)=1$. This is a contradiction because $gcd(40902, 24140)=34$. So the inverse element of $24140$ doesn't exist.
+\subsection{4.19(c)}
+\begin{table}
+  \caption{4.19(c)}
+  \label{tab:4.19(c)}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i$&$q_i$&$u_i$&$v_i$\\
+    \midrule
+    $-1$&$1769$&&$1$&$0$\\
+    $0$&$550$&&$0$&$1$\\
+	$1$&$119$&$3$&$1$&$-3$\\
+	$2$&$74$&$4$&$-4$&$13$\\
+	$3$&$45$&$1$&$5$&$-16$\\
+	$4$&$29$&$1$&$-9$&$29$\\
+	$5$&$16$&$1$&$14$&$-45$\\
+	$6$&$13$&$1$&$-23$&$74$\\
+	$7$&$3$&$1$&$37$&$-119$\\
+	$8$&$1$&$4$&$-171$&$550$\\
+	$9$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+According to Table \ref{tab:4.19(c)}'s line whose $i=8$:
+\begin{align*}
+	-171*1769+550*550=1\\
+	\Rightarrow550*550\equiv1\ (\text{mod}\ 1769)
+\end{align*}
+So the inverse element of 550 is 550.
+\section{Problem 4.27}
+\begin{table}
+  \caption{4.27}
+  \label{tab:4.27}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i(x)$&$q_i(x)$&$u_i(x)$&$v_i(x)$\\
+    \midrule
+    $-1$&$x^4+x+1$&&$1$&$0$\\
+    $0$&$x^3+x+1$&&$0$&$1$\\
+	$1$&$x^2+1$&$x$&$1$&$-x$\\
+	$2$&$1$&$x$&$-x$&$x^2+1$\\
+	$3$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+According to Table \ref{tab:4.27}'s line whose $i=2$:
+\begin{align*}
+	(x^3+x+1)(x^2+1)-(x^4+x+1)x=1\\
+	\Rightarrow(x^3+x+1)(x^2+1)\equiv1\ (\text{mod}\ x^4+x+1)
+\end{align*}
+So the inverse element of $x^3+x+1$ is $x^2+1$.
+\section{Problem 8.1}
+\subsection{8.1(a)}
+\label{8.1(a)}
+No.
+\begin{align*}
+	X &= 1+p_1p_2...p_n\\
+	\Rightarrow X &\equiv 1\ (\text{mod}\ p_i)\quad(i=1,2,...,n)\\
+	\Rightarrow p_i&\nmid X (i=1,2,...,n)
+\end{align*}
+So there is no prime $P_m$ by which $X$ can be evenly divided.
+\subsection{8.1(b)}
+\label{8.1(b)}
+$m\notin \{1, 2, ..., n\}$
+\subsection{8.1(c)}
+Suppose there is only $n$ primes. According to section \ref{8.1(a)} and section \ref{8.1(b)}, $X$ can't be divided by all the primes. So $X$ is another prime which is not in $\{p_1,p_2,...,p_n\}$. So there are $n+1$ primes. This is a contradiction. So the number of prime is unlimited.
+\subsection{8.1(d)}
+Since $X$ is a prime which is greater than $p_n$, if $P_{n+1}$ is the first prime that is greater than $p_n$, $p_n<P_{n+1} \leq X$. So
+\begin{displaymath}
+	P_n\leq 1+p_1p_2...p_n
+\end{displaymath}
+\section{Problem 8.8}
+Suppose $x$ and $35$ is co-prime.
+\begin{align*}
+	x^{\phi (35)}&\equiv1\ (\text{mod}\ 35)\\
+	x^{\phi (7) \phi (5)}&\equiv1\ (\text{mod}\ 35)\\
+	x^{6*4}&\equiv1\ (\text{mod}\ 35)\\
+	x^{24}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow x^{72}&\equiv1\ (\text{mod}\ 35)\\
+\end{align*}
+Suppose $x^{85}\equiv6\ (\text{mod}\ 35)$.
+\begin{align*}
+	\Rightarrow x^{85-72}&\equiv6\ (\text{mod}\ 35)\\
+	\Rightarrow x^{13}&\equiv6\ (\text{mod}\ 35)\\
+	\Rightarrow x^{26}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow x^{26-24}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow x^{2}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow (x+1)(x-1) &\mid 35\\
+	\Rightarrow (x+1)&\mid35\\
+	\text{or}\\
+	(x-1)&\mid35\\
+	\text{or}\\
+	(x+1)\mid5,(x-1)&\mid7\\
+	\text{or}\\
+	(x+1)\mid7,(x-1)&\mid5
+\end{align*}
+So $x=34+35k$ or $x=1+35k$ or $x=99+35k$ (using CRT) or $x=111+35k$ (using CRT). Since $0<x<28$, $x=1$ or $x=6$. If $x=1$, $x^{85}\equiv1\nequiv6\ (\text{mod}\ 35)$. So after validation, $x=6$.
+\section{Problem 8.12}
+Suppose $m$ is an integer and $p$ is a prime. We write down all the number than less than $mp$ in the following way.
+\begin{center}
+	\begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    $1$&$2$&$...$&$m-1$&$m$\\
+    $m+1$&$m+2$&$...$&$2m-1$&$2m$\\
+    $2m+1$&$2m+2$&$...$&$3m-1$&$3m$\\
+    $...$&$...$&$...$&$...$&$...$\\
+    $(p-1)m+1$&$(p-1)m+2$&$...$&$pm-1$&$pm$\\
+\end{tabular}
+\end{center}
+It's easy to find $gcd(x,m)=gcd(x+km, m)$. So if the first number of one column and $m$ are co-prime, the whole column and $m$ are co-prime. If the first number of one column and $m$ aren't co-prime, the whole column and $m$ aren't co-prime, and the whole column and $mp$ aren't co-prime.\\\\
+We first proof that if $m$ and $p$ are not co-prime, $\phi(mp)=\phi(m)*p$. Since $m$ and $p$ are not co-prime, if $x$ and $m$ are co-prime, $x$ and $p$ are co-prime. So $x$ and $mp$ are co-prime. That means $gcd(x, m)=1\Rightarrow gcd(x, mp)=1$. So if the first number of one column and $m$ are co-prime, the whole column and $m$ are co-prime, thus the whole column and $mp$ are co-prime. As a result, the count of all the numbers that are less than $pm$ and are co-prime to $mp$ is $\phi(m)p$.\\\\
+Then we proof that if $m$ and $p$ are co-prime, $\phi(mp)=\phi(m)*(p-1)$. Now we have $\phi(m)$ columns of numbers that are co-prime to $m$. All the other numbers are not co-prime to $m$ as same as $mp$. Since $m$ and $p$ are co-prime, in each column there is only one number that isn't co-prime to $p$. Otherwise
+\begin{align*}
+	gcd(k_1m+b,p)\neq1 \Rightarrow gcd(k_1m+b,p)=p \Rightarrow p\mid k_1m+b\\
+	gcd(k_2m+b,p)\neq1 \Rightarrow gcd(k_2m+b,p)=p \Rightarrow p\mid k_2m+b\\
+	\Rightarrow p \mid(k2-k1)m
+\end{align*}
+Since $k1-k2<p$, we have $p\mid m$. It is impossible because $m$ and $p$ are co-prime.\\\\
+We can prove that all the numbers in one column have different residuals divided by $p$. Otherwise
+\begin{align*}
+	k_1m+b&\equiv r\ (\text{mod}\ p)\\
+	k_2m+b&\equiv r\ (\text{mod}\ p)\\
+	\Rightarrow p \mid(k2-k1)m
+\end{align*}
+Since $k1-k2<p$, we have $p\mid m$. It is impossible because $m$ and $p$ are co-prime. Now we know that all the numbers in one column has different residual divided by $p$. There are $p$ numbers in a column, so there must be a number that is not co-prime to $p$. As a result, in each column there is one and only one number that isn't co-prime to $p$.\\\\
+So there are $\phi(m)*p-\phi(m)$ numbers that are co-prime to both $m$ and $p$. Since $gcd(x, m)=1, gcd(x, p) \Rightarrow gcd(x, mp)=1$, there are $\phi(m)*p-\phi(m)$ numbers that are co-prime to $mp$, which means $\phi(mp)=\phi(m)(p-1)$.\\\\
+If $m=p_1^{\alpha_1}p_2^{\alpha_2}...p_n^{\alpha_n}$, we can calculate $\phi(m)$ by the following way using previous lemmas.
+\begin{align*}
+	\phi(p_1)&=p_1-1\\
+	\phi(p_1p_2)&=(p_1-1)(p_2-1)\\
+	...\\
+	\phi(p_1p_2...p_n)&=(p_1-1)(p_2-1)...(p_n-1)\\
+	\phi(p_1^2p_2...p_n)&=p_1(p_1-1)(p_2-1)...(p_n-1)\\
+	...\\
+	\phi(p_1^{\alpha_1}p_2...p_n)&=p_1^{\alpha_1-1}(p_1-1)(p_2-1)...(p_n-1)\\
+	...\\
+	\phi(p_1^{\alpha_1}p_2^{\alpha_2}...p_n)&=p_1^{\alpha_1-1}(p_1-1)p_2^{\alpha_2-1}(p_2-1)...(p_n-1)\\
+	...\\
+	\phi(p_1^{\alpha_1}p_2^{\alpha_2}...p_n^{\alpha_n})&=p_1^{\alpha_1-1}(p_1-1)p_2^{\alpha_2-1}(p_2-1)...p_n^{\alpha_n-1}(p_n-1)\\
+	\phi(m)=&\prod_{i=1}^{n}p_i^{\alpha_i-1}(p_i-1) 
+\end{align*}
+\section{Problem 8.14}
+\subsection{8.14(a)}
+$3$. Since $3\mid 2^3-2$.
+\subsection{8.14(b)}
+Since $n$ is a prime which not equals $2$, $n$ and $2^{n - 1}$ are co-prime. According to Euler Theorem,
+\begin{align*}
+	2^{\phi(n)}&\equiv1\ (\text{mod}\ n)\\
+	\Rightarrow 2^{n-1}&\equiv1\ (\text{mod}\ n)\\
+	\Rightarrow 2^n&\equiv2\ (\text{mod}\ n)\\
+	\Rightarrow n&\mid 2^n-2
+\end{align*}
+\subsection{8.14(c)}
+$561=3*11*17$
+\begin{align*}
+	561&=512+32+16+1\\
+	2^{1}&\equiv2\ (\text{mod}\ 561)\\
+	2^{2}&\equiv4\ (\text{mod}\ 561)\\
+	2^{4}&\equiv16\ (\text{mod}\ 561)\\
+	2^{8}&\equiv256\ (\text{mod}\ 561)\\
+	2^{16}&\equiv460\ (\text{mod}\ 561)\\
+	2^{32}&\equiv103\ (\text{mod}\ 561)\\	
+	2^{64}&\equiv511\ (\text{mod}\ 561)\\
+	2^{128}&\equiv256\ (\text{mod}\ 561)\\
+	2^{256}&\equiv460\ (\text{mod}\ 561)\\
+	2^{512}&\equiv103\ (\text{mod}\ 561)\\
+	\Rightarrow 2^{561}=2^{512} * 2^{32} + 2^{16} + 2^{1}&\equiv103 * 103 * 460 * 2\equiv2\ (\text{mod}\ 561)\\
+	\Rightarrow 561 &\mid 2^{561} - 2
+\end{align*}
+\subsection{8.14(d)}
+According Euler Theorem,
+\begin{align*}
+	2^{\phi(341)}&\equiv1\ (\text{mod}\ 341)\\
+	2^{\phi(11) * \phi(31)}&\equiv1\ (\text{mod}\ 341)\\
+	2^{10*30}&\equiv1\ (\text{mod}\ 341)\\
+	2^{300}&\equiv1\ (\text{mod}\ 341)\\
+\end{align*}
+So
+\begin{align*}
+	2^{40}-1&=(2^{20}+1)(2^{20}-1)\\
+	&=(2^{20}+1)(2^{10}+1)(2^{10}-1)\\
+	&=(2^{20}+1)(2^{10}+1)(2^{5}+1)(2^{5}-1)\\
+	&=(2^{20}+1)(2^{10}+1)*33*31\\
+	&=(2^{20}+1)(2^{10}+1)*3*11*31\\
+	\Rightarrow 2^{40}-1 &\mid 11,  2^{40}-1 \mid 31\\
+	\Rightarrow 2^{40}-1 &\mid 341\\
+	\Rightarrow 2^{40}&\equiv1\ (\text{mod}\ 341)\\
+	\Rightarrow 2^{340}&\equiv1\ (\text{mod}\ 341)\\
+	\Rightarrow 2^{341}&\equiv2\ (\text{mod}\ 341)\\
+\end{align*}
+\section{Problem 8.19}
+$371$st day is the first day. Suppose $x$ is the day. We have these equations. We choose 4 equations from the original 7 equations.
+\begin{multicols}{2}
+\begin{align*} 
+	x&\equiv1\ (\text{mod}\ 2)\\
+	x&\equiv2\ (\text{mod}\ 3)\\
+	x&\equiv3\ (\text{mod}\ 4)\\
+	x&\equiv4\ (\text{mod}\ 1)\\
+	x&\equiv5\ (\text{mod}\ 6)\\
+	x&\equiv6\ (\text{mod}\ 5)\\
+	x&\equiv0\ (\text{mod}\ 7)\\
+\end{align*}
+\columnbreak \\
+\begin{align*}
+	x&\equiv1\ (\text{mod}\ 2)\\
+	x&\equiv2\ (\text{mod}\ 3)\\
+	x&\equiv1\ (\text{mod}\ 5)\\
+	x&\equiv0\ (\text{mod}\ 7)
+\end{align*}
+\end{multicols}
+\noindent First, we solve the equations on the right side. According to CRT.
+\begin{multicols}{2}
+\begin{align*}
+	M&=m_1m_2m_3=2*3*5*7=210,\\
+	a_1&=1,a_2=2,a_3=1,a_4=0\\
+	x&=a_1t_1M_1+a_2t_2M_2+a_3t_3M_3+a_4t_4M_4+KM\\
+	x&=t_1M/m_1+2t_2M/m_2+t_3M/m_3\\
+	x&=105t_1+140t_2+42t_3+210K\quad(K \in \mathbb{Z})
+\end{align*}
+\columnbreak\\
+\begin{align*}
+	105t_1&\equiv1\ (\text{mod}\ 2)\Rightarrow t_1\equiv1\ (\text{mod}\ 2)\\
+	70t_2&\equiv1\ (\text{mod}\ 3)\Rightarrow t_2\equiv1\ (\text{mod}\ 3)\\
+	42t_3&\equiv1\ (\text{mod}\ 5)\Rightarrow t_3\equiv3\ (\text{mod}\ 5)
+\end{align*}
+\end{multicols}
+\noindent So
+\begin{align*}
+	x&=371+210K\quad(K \in \mathbb{Z})
+\end{align*}
+$x$ already satisfy $x\equiv4\ (\text{mod}\ 1)$. So we need $x\equiv3\ (\text{mod}\ 4)$ and $x\equiv5\ (\text{mod}\ 6)$. Thus
+\begin{align*}
+4\mid 210K+371-3=210K+368\\
+6\mid 210K+371-5=210K+366
+\end{align*}
+Since $6\mid 210K+366$ is always right, $4\mid210K+368 \Rightarrow 2\mid105K$. So $K$ is an even number. So smallest $x>0$ is $371$.
+\section{Problem 8.22}
+\begin{lstlisting}[language=C++]
+int fastPow(int base, int t, int mod) {
+    if (base == 1) return 1;
+    if (t == 0) return 1;
+    bool start = false;
+    int ret;
+    for (int i = 30; i >= 0; --i) {
+        int mask = 1 << i;
+            if (start) {
+            if (mask & t) {
+                ret = ((((ret % mod) * (ret % mod)) % mod) * (base % mod)) % mod;
+            } else {
+                ret = ((ret % mod) * (ret % mod)) % mod;
+            }
+        } else {
+            if (mask & t) {
+                ret = base % mod;
+                start = true;
+            }
+        }
+    }
+    return ret;
+}
+\end{lstlisting}
+\section{Problem 8.23}
+\begin{lstlisting}[language=C++]
+int gcd (int a, int b) {
+    if (b == 0) return a;
+    else return gcd(b, a % b);
+}
+
+bool witnessTest(int n, int witness) {
+    if (fastPow(witness, n - 1, n) == 1) return true;
+    else return false;
+}
+
+bool mrTest(int n) {
+    if (n < 2) return false;
+    int testCount = 30;
+    while (testCount) {
+        int witness = (random() % 10007);
+        if (gcd(witness, n) == 1) {
+            if (!witnessTest(n, witness)) return false;
+            testCount--;
+        } else {
+            continue;
+        }
+    }
+    return true;
+}
+\end{lstlisting}
+\end{CJK*}
+\end{document}

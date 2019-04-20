@@ -1,0 +1,332 @@
+% !TeX program = XeLaTeX
+% !TeX encoding = UTF-8 Unicode
+%
+\documentclass[11pt]{article}
+\frenchspacing
+\setlength\parskip{1.5pt plus 1pt minus 0.5pt}
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Pagella}
+\linespread{1.05}\selectfont
+\setsansfont{TeX Gyre Heros}[
+  Scale=MatchLowercase
+]
+\setmonofont{Fira Code}[
+  Scale=MatchLowercase,
+  Contextuals=Alternate
+]
+\newfontfamily\LMMono{Latin Modern Mono}[
+  Scale=MatchLowercase
+]
+\usepackage{microtype}
+\usepackage{xcolor}
+
+\usepackage{listings}
+\usepackage[verbatim]{lstfiracode}
+\lstset{
+  language=C++,
+  style=FiraCodeStyle,
+  basicstyle=\ttfamily,
+  commentstyle=\color{orange}
+}
+\makeatletter
+\lstnewenvironment{LaTeXlisting}{%
+  \RestoreVerbatimBehavior
+  \lst@CCPutMacro
+    \lst@ProcessOther {"2D}{\lst@ttfamily{-{}}{-{}}}
+    \@empty\z@\@empty
+  \lstset{
+    style={},
+    literate={},
+    language=[LaTeX]TeX,
+    basicstyle=\small\LMMono,
+    basewidth=0.525em,
+    commentstyle=\itshape
+  }%
+}{}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true
+}
+\usepackage{geometry}
+\geometry{
+  width=5.7in
+}
+
+\newcommand*\myemail{ruixizhang42@gmail.com}
+\newcommand*\dash{}
+\DeclareRobustCommand\dash{%
+  \unskip\nobreak\thinspace\textemdash\thinspace\ignorespaces
+}
+\newcommand\versionhistory[3]{%
+  % #1: version number, #2: date, #3: description
+  \item[#1]#3\hfill#2%
+}
+\title{The \texttt{lstfiracode} package}
+\author{Ruixi~Zhang\thanks{\href{mailto:\myemail}{\nolinkurl{\myemail}}.}}
+\date{2018/12/24\enskip v0.1c}
+
+\begin{document}
+
+\maketitle
+
+\microtypesetup{protrusion=false}
+\tableofcontents
+\microtypesetup{protrusion=true}
+
+\section{Introduction}
+
+The Fira Code\footnote{See \url{https://github.com/tonsky/FiraCode}.} family
+of fonts, created by Nikita Prokopov, is a monospaced typeface with
+programming ligatures.
+It is attempting for many people, me included, to use Fira Code for source
+code listings.
+However, the \verb|lstlisting| environment from the \verb|listings| package
+does not support ligatures naively. To produce the desired output, one must
+specify all necessary ligatures via the \verb|literate| key
+of \verb|\lstset|, which can be tedious.
+
+The \verb|lstfiracode| package defines a ready-to-use \verb|listings| style,
+\verb|FiraCodeStyle|, which pre-specifies 125 ligatures
+(note that Fira Code v1.206 has 130 ligatures in total).
+You may \emph{append} the remaining 5 ligatures to the \verb|FiraCodeStyle|
+literate list via a new key \verb|moreliterate|, without unintentionally
+erasing all existing ligatures via \verb|literate|.
+
+The \verb|lstfiracode| package also provides a package option,
+\verb|verbatim|, along with three switches
+\verb|\ActivateVerbatimLigatures|, \verb|\DeactivateVerbatimLigatures|
+and \verb|\RestoreVerbatimBehavior|
+to support source code listings using Fira Code
+in the \verb|verbatim| environment.
+
+This package does \emph{not} provide the Fira Code font files.
+The newest version of the fonts can be downloaded at
+\url{https://github.com/tonsky/FiraCode/releases}.
+
+\section{Usage}
+
+To access \verb|FiraCodeStyle|, simply load \verb|lstfiracode| \emph{after}
+\verb|listings|. Here is how you may setup your document:
+\begin{LaTeXlisting}
+    \documentclass{article}
+    \usepackage{fontspec}
+    \setmonofont{FiraCode-Regular.otf}[
+      BoldFont=FiraCode-Bold.otf,
+      Contextuals=Alternate  % Activate the calt feature
+    ]
+    \usepackage{xcolor}
+    \usepackage{listings}
+    \usepackage[verbatim]{lstfiracode} % Activate ligatures in verbatim
+    \lstset{
+      language=C++,
+      style=FiraCodeStyle,   % Use predefined FiraCodeStyle
+      basicstyle=\ttfamily,  % Use \ttfamily for source code listings
+      commentstyle=\color{orange}
+    }
+    \begin{document}
+    \begin{verbatim}
+    A<-www>>=B
+    \end{verbatim}
+    \begin{lstlisting}
+    /* A simple C++ program */
+    int main() {
+        cout << "Hello World"; // prints Hello World
+        return 0;
+    }
+    \end{lstlisting}
+    \end{document}
+\end{LaTeXlisting}
+which produces the following \verb|verbatim| (observe the {\LMMono<-},
+the {\LMMono www} and the {\LMMono>>=} ligatures):
+\begin{verbatim}
+    A<-www>>=B
+\end{verbatim}
+and the following \verb|lstlisting| (observe the {\LMMono++}
+and the {\LMMono<<} ligatures):
+\begin{lstlisting}
+    /* A simple C++ program */
+    int main() {
+        cout << "Hello World"; // prints Hello World
+        return 0;
+    }
+\end{lstlisting}
+
+\section{Package features}
+
+\subsection{Package option and user commands}
+
+The \verb|lstfiracode| package provides one package option and three user
+commands, described below.
+
+You may load the \verb|lstfiracode| package with the option \verb|verbatim|,
+or equivalently \verb|verbatim=true|. This activates all Fira Code ligatures
+in the \verb|verbatim| environment.
+\begin{LaTeXlisting}
+    % Activate Fira Code ligatures in verbatim
+    \usepackage[verbatim]{lstfiracode}
+    % is the same as
+    \usepackage[verbatim=true]{lstfiracode}
+\end{LaTeXlisting}
+Loading the package without any option (the default), or equivalently with
+the option \verb|verbatim=false|, \emph{does not alter} how the
+\verb|verbatim| environment is handled.
+\begin{LaTeXlisting}
+    % Leave verbatim unaltered
+    \usepackage{lstfiracode}
+    % is the same as
+    \usepackage[verbatim=false]{lstfiracode}
+\end{LaTeXlisting}
+
+You may change your mind in the middle of your document, so there are
+three switches for such purpose:
+\begin{description}
+\item[\texttt{\textbackslash ActivateVerbatimLigatures}]
+Activate all Fira Code ligatures in \verb|verbatim|. This is executed
+automatically with the package option \verb|verbatim=true|.
+\item[\texttt{\textbackslash DeactivateVerbatimLigatures}]
+Suppress \emph{almost all} Fira Code ligatures in \verb|verbatim|.
+Currently, it cannot break the {\LMMono\#\{} and the {\LMMono|\}} ligatures.
+You should use Fira Mono if you wish to avoid ligatures altogether.
+\item[\texttt{\textbackslash RestoreVerbatimBehavior}]
+Restore how \verb|verbatim| is originally handled by \LaTeX.
+\end{description}
+These switches can overwrite each other and they act \emph{locally}.
+For instance, the following three \verb|verbatim| environments
+\begin{LaTeXlisting}
+    \begingroup
+    \ActivateVerbatimLigatures
+    \begin{verbatim}
+    A<-www>>=B % Fira Code ligatures activated
+    \end{verbatim}
+    \DeactivateVerbatimLigatures
+    \begin{verbatim}
+    A<-www>>=B % Fira Code ligatures deactivated
+    \end{verbatim}
+    \RestoreVerbatimBehavior
+    \begin{verbatim}
+    A<-www>>=B % Hmm...
+    \end{verbatim}
+    \endgroup
+\end{LaTeXlisting}
+produce, respectively,
+\begingroup
+\ActivateVerbatimLigatures
+\begin{verbatim}
+    A<-www>>=B % Fira Code ligatures activated
+\end{verbatim}
+\DeactivateVerbatimLigatures
+\begin{verbatim}
+    A<-www>>=B % Fira Code ligatures deactivated
+\end{verbatim}
+\RestoreVerbatimBehavior
+\begin{verbatim}
+    A<-www>>=B % Hmm...
+\end{verbatim}
+\endgroup
+
+\subsection{The \texttt{FiraCodeStyle} listings style}
+
+The ligatures of Fira Code are treated as literate programming by the
+\verb|lstfiracode| package. These ligatures are specified via the
+\verb|literate| key in defining \verb|FiraCodeStyle|.
+The definition of \verb|FiraCodeStyle| looks like this:
+\begin{LaTeXlisting}
+    \lstdefinestyle{FiraCodeStyle}{
+      basewidth=0.6em,
+      literate=
+        {www}{{www}}3
+        ...  % All other necessary ligatures in Fira Code
+    }
+\end{LaTeXlisting}
+
+Thus, \verb|FiraCodeStyle| specifies \verb|basewidth| explicitly and
+lists \emph{almost all} literate replacements.
+\emph{It does not contain any font changing commands because users may load
+Fira Code according to their preferences.}
+In the case that \verb|\ttfamily| corresponds to Fira Code,
+be sure to specify \verb|basicstyle=\ttfamily| \emph{in addition to}
+\verb|style=FiraCodeStyle|, i.e.,
+\begin{LaTeXlisting}
+    \usepackage{listings}
+    \usepackage{lstfiracode}
+    % Assume that you have set Fira Code via \setmonofont
+    % Then remember to also specify basicstyle
+    \lstset{style=FiraCodeStyle,basicstyle=\ttfamily}
+\end{LaTeXlisting}
+
+\subsection{The missing ligatures and the new key \texttt{moreliterate}}
+
+You may notice that some ligatures in Fira Code are still missing. Well,
+there are 5 such ligatures\dash strictly speaking, they \emph{are} listed
+as literate replacements in the definition of \verb|FiraCodeStyle|,
+but are simply commented out:
+\begin{center}
+\LMMono
+\begin{tabular}{c c c c c}
+\toprule
+\multicolumn{5}{c}{\rmfamily The ``missing'' ligatures} \\
+\midrule
+/* & */ & // & /// & ;; \\
+\bottomrule
+\end{tabular}
+\end{center}
+These particular combinations of characters usually indicate comment mode.
+If they were to be implemented as literate replacements, they would break
+how the \verb|listings| package handles comment highlighting.
+
+Nevertheless, you can still \emph{append} these ligatures to the
+\verb|FiraCodeStyle| literate list.
+Say, you want to activate the {\LMMono;;} ligature in your
+{\LMMono C++} code. \emph{But you cannot simply write}
+{\LMMono\textbackslash lstset\{style=FiraCodeStyle,%
+literate=\{;;\}\{\{;;\}\}2\}}
+\emph{because this will erase all predefined ligatures, leaving only the}
+{\LMMono;;} \emph{ligature}.
+Instead, you should use the new key\dash
+\verb|moreliterate|\dash to add more literate replacements:
+\begin{LaTeXlisting}
+    % Let's add more ligatures
+    \lstset{
+      language=C++,
+      style=FiraCodeStyle,
+      basicstyle=\ttfamily,
+      moreliterate=
+        {;;}{{;;}}2
+        {///}{{///}}3
+    }
+\end{LaTeXlisting}
+
+\section{Troubleshooting}
+
+The \verb|lstfiracode| package is maintained at GitHub. Please make each
+bug report with a \emph{minimal example} at
+\url{https://github.com/RuixiZhang42/lstfiracode/issues}.
+Pull requests are welcome.
+
+\section*{Version history}
+
+\begin{description}
+\versionhistory{v0.1c}{2018/12/24}{%
+  Removed \texttt{Ligatures=Common}
+    from \texttt{README.md} and \texttt{lstfiracode.tex}
+    (see \href{https://github.com/RuixiZhang42/lstfiracode/issues/1}{%
+    \#1}).
+  Re-implemented
+    \texttt{\textbackslash DeactivateVerbatimLigatures}.%
+}
+\versionhistory{v0.1b}{2018/12/20}{%
+  Updated \texttt{FiraCodeStyle} literate list.
+  Added \texttt{\textbackslash RestoreVerbatimBehavior}.
+  Re-implemented
+    \texttt{\textbackslash Activate}/%
+    \texttt{\textbackslash DeactivateVerbatimLigatures}.%
+}
+\versionhistory{v0.1a}{2018/12/16}{%
+  Initial release.%
+}
+\end{description}
+
+\end{document}

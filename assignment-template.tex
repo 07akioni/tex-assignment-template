@@ -1,0 +1,413 @@
+\documentclass[acmlarge,screen]{acmart}
+\usepackage{xeCJK}
+\usepackage{multicol}
+\usepackage{array, stackengine}
+\usepackage{listings}
+\usepackage{fontspec}
+\usepackage{lstfiracode}
+
+\def\verbatim@nolig@list{}
+
+\setmonofont[
+  BoldFont={Fira Code Bold},
+  Contextuals=Alternate
+]{Fira Code}
+
+\lstset{
+	basicstyle=\linespread{1.11}\fontsize{9pt}{9pt}\ttfamily,
+	style=FiraCodeStyle,
+	keywordstyle=\bfseries,
+	breaklines=true,
+	% numbers=left
+}
+
+\begin{document}
+\title{作业 2}
+\author{张乐聪 (1801213722)}
+\maketitle
+\section{问题 4.17}
+\subsection{4.17(a)}
+\begin{multicols}{2}
+Euclid:
+\begin{align*}
+	gcd(2152, 764) &= gcd(754, 624)\\
+	&= gcd(624, 140)\\
+	&= gcd(140, 64)\\
+	&= gcd(64, 12)\\
+	&= gcd(12, 4)\\
+	&= gcd(4, 0)\\
+	&= 4
+\end{align*}
+\columnbreak \\
+Stein:
+\begin{align*}
+	A_1&=2152 & B_1&=764 & C_1&=1\\
+	A_2&=1076 & B_2&=382 & C_2&=2\\
+	A_3&=538 & B_3&=191 & C_3&=4\\
+	A_4&=269 & B_4&=191 & C_4&=4\\
+	A_5&=78 & B_5&=191 & C_5&=4\\
+	A_6&=39 & B_6&=191 & C_6&=4\\
+	A_7&=152 & B_7&=39 & C_7&=4\\
+	A_8&=76 & B_8&=39 & C_8&=4\\
+	A_9&=38 & B_9&=39 & C_9&=4\\
+	A_{10}&=1 & B_{10}&=38 & C_{10}&=4\\
+	A_{11}&=37 & B_{11}&=1 & C_{11}&=4\\
+	A_{12}&=36 & B_{12}&=1 & C_{12}&=4\\
+	A_{13}&=18 & B_{13}&=1 & C_{13}&=4\\
+	A_{14}&=9 & B_{14}&=1 & C_{14}&=4\\
+	A_{15}&=8 & B_{15}&=1 & C_{15}&=4\\
+	A_{16}&=4 & B_{16}&=1 & C_{16}&=4\\
+	A_{17}&=2 & B_{17}&=1 & C_{17}&=4\\
+	A_{18}&=1 & B_{18}&=1 & C_{18}&=4
+\end{align*}
+since $A_{18}=B_{18}$, $gcd(2152, 764)=A_{18}*C_{18}=4$
+\end{multicols}
+\subsection{4.17(b)}
+和 Euclid 算法相比，Stein 算法使用不使用除法而是使用右移和减法，它使用的指令在 CPU 运算的速度更快。
+\section{问题 4.19}
+\subsection{4.19(a)}
+\begin{table}
+  \caption{4.19(a)}
+  \label{tab:4.19(a)}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i$&$q_i$&$u_i$&$v_i$\\
+    \midrule
+    $-1$&$4321$&&$1$&$0$\\
+    $0$&$1234$&&$0$&$1$\\
+	$1$&$619$&$3$&$1$&$-3$\\
+	$2$&$615$&$1$&$-1$&$4$\\
+	$3$&$4$&$1$&$2$&$-7$\\
+	$4$&$3$&$153$&$-307$&$1075$\\
+	$5$&$1$&$1$&$309$&$-1082$\\
+	$6$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+通过表格 \ref{tab:4.19(a)} 的$i=5$那一行可知：
+\begin{align*}
+	309*4321-1082*1234=1\\
+	\Rightarrow-1082*1234\equiv1\ (\text{mod}\ 4321)\\
+	\Rightarrow3239*1234\equiv1\ (\text{mod}\ 4321)
+\end{align*}
+$1234$的逆元是$3239$。
+\subsection{4.19(b)}
+\begin{table}
+  \caption{4.19(b)}
+  \label{tab:4.19(b)}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i$&$q_i$&$u_i$&$v_i$\\
+    \midrule
+    $-1$&$40902$&&$1$&$0$\\
+    $0$&$24140$&&$0$&$1$\\
+	$1$&$16762$&$1$&$1$&$-1$\\
+	$2$&$7378$&$1$&$-1$&$2$\\
+	$3$&$2006$&$2$&$3$&$-5$\\
+	$4$&$1360$&$3$&$-10$&$17$\\
+	$5$&$646$&$1$&$13$&$-22$\\
+	$6$&$68$&$2$&$-36$&$61$\\
+	$7$&$34$&$9$&$337$&$-571$\\
+	$8$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+通过表格 \ref{tab:4.19(b)} 的$i=7$那一行可知：
+\begin{align*}
+	337*40902-571*24140=34\\
+	\Rightarrow-571*24140\equiv34\ (\text{mod}\ 40902)\\
+	\Rightarrow40331*24140\equiv34\ (\text{mod}\ 40902)
+\end{align*}
+所以$gcd(40902, 24140)=34$，因为$1$是单位元，$24140$的逆元$x$应该满足
+\begin{align*}
+24140x\equiv1\ (\text{mod}\ 40902)	
+\end{align*}
+也就是说$gcd(40902, 24140)=1$，这和$gcd(40902, 24140)=34$是矛盾的。所以$24140$的逆元不存在。
+\subsection{4.19(c)}
+\begin{table}
+  \caption{4.19(c)}
+  \label{tab:4.19(c)}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i$&$q_i$&$u_i$&$v_i$\\
+    \midrule
+    $-1$&$1769$&&$1$&$0$\\
+    $0$&$550$&&$0$&$1$\\
+	$1$&$119$&$3$&$1$&$-3$\\
+	$2$&$74$&$4$&$-4$&$13$\\
+	$3$&$45$&$1$&$5$&$-16$\\
+	$4$&$29$&$1$&$-9$&$29$\\
+	$5$&$16$&$1$&$14$&$-45$\\
+	$6$&$13$&$1$&$-23$&$74$\\
+	$7$&$3$&$1$&$37$&$-119$\\
+	$8$&$1$&$4$&$-171$&$550$\\
+	$9$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+通过 表格 \ref{tab:4.19(c)} 的$i=8$那一行可知：
+\begin{align*}
+	-171*1769+550*550=1\\
+	\Rightarrow550*550\equiv1\ (\text{mod}\ 1769)
+\end{align*}
+所以$550$的逆元是$550$。
+\section{问题 4.27}
+\begin{table}
+  \caption{4.27}
+  \label{tab:4.27}
+  \begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    \toprule
+    $i$&$r_i(x)$&$q_i(x)$&$u_i(x)$&$v_i(x)$\\
+    \midrule
+    $-1$&$x^4+x+1$&&$1$&$0$\\
+    $0$&$x^3+x+1$&&$0$&$1$\\
+	$1$&$x^2+1$&$x$&$1$&$-x$\\
+	$2$&$1$&$x$&$-x$&$x^2+1$\\
+	$3$&$0$&&&\\
+  \bottomrule
+\end{tabular}
+\end{table}
+通过 表格 \ref{tab:4.27} 的$i=2$那一行可知：
+\begin{align*}
+	(x^3+x+1)(x^2+1)-(x^4+x+1)x=1\\
+	\Rightarrow(x^3+x+1)(x^2+1)\equiv1\ (\text{mod}\ x^4+x+1)
+\end{align*}
+所以$x^3+x+1$的逆元是$x^2+1$。
+\section{问题 8.1}
+\subsection{8.1(a)}
+\label{8.1(a)}
+不存在。
+\begin{align*}
+	X &= 1+p_1p_2...p_n\\
+	\Rightarrow X &\equiv 1\ (\text{mod}\ p_i)\quad(i=1,2,...,n)\\
+	\Rightarrow p_i&\nmid X (i=1,2,...,n)
+\end{align*}
+所以不存在$P_m$可以整除$X$。
+\subsection{8.1(b)}
+\label{8.1(b)}
+$m\notin \{1, 2, ..., n\}$
+\subsection{8.1(c)}
+假设只有$n$个质数，通过章节\ref{8.1(a)}和章节\ref{8.1(b)}可知，$X$不能被任何质数整除，所以$X$是一个不在$\{p_1,p_2,...,p_n\}$里面的质数，所以就存在$n+1$个质数，这和只存在$n$个质数矛盾。所以质数的数量是无限的。
+\subsection{8.1(d)}
+因为$X$是一个大于$p_n$的质数，如果$P_{n+1}$是第一个大于$p_n$的质数，$p_n<P_{n+1} \leq X$。所以
+\begin{displaymath}
+	P_n\leq 1+p_1p_2...p_n
+\end{displaymath}
+\section{问题 8.8}
+假设$x$和$35$是互质的。
+\begin{align*}
+	x^{\phi (35)}&\equiv1\ (\text{mod}\ 35)\\
+	x^{\phi (7) \phi (5)}&\equiv1\ (\text{mod}\ 35)\\
+	x^{6*4}&\equiv1\ (\text{mod}\ 35)\\
+	x^{24}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow x^{72}&\equiv1\ (\text{mod}\ 35)\\
+\end{align*}
+假设$x^{85}\equiv6\ (\text{mod}\ 35)$.
+\begin{align*}
+	\Rightarrow x^{85-72}&\equiv6\ (\text{mod}\ 35)\\
+	\Rightarrow x^{13}&\equiv6\ (\text{mod}\ 35)\\
+	\Rightarrow x^{26}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow x^{26-24}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow x^{2}&\equiv1\ (\text{mod}\ 35)\\
+	\Rightarrow (x+1)(x-1) &\mid 35\\
+	\Rightarrow (x+1)&\mid35\\
+	\text{or}\\
+	(x-1)&\mid35\\
+	\text{or}\\
+	(x+1)\mid5,(x-1)&\mid7\\
+	\text{or}\\
+	(x+1)\mid7,(x-1)&\mid5
+\end{align*}
+所以$x=34+35k$或$x=1+35k$或$x=99+35k$（使用中国剩余定理）或$x=111+35k$（使用中国剩余定理）。因为$0<x<28$，所以$x=1$或$x=6$，如果$x=1$，$x^{85}\equiv1\nequiv6\ (\text{mod}\ 35)$。经过验证后，$x=6$。
+\section{问题 8.12}
+假设$m$是一个整数并且$p$是一个质数。我们把所有小小于等于$mp$的数写成下面的形式：
+\begin{center}
+	\begin{tabular}{m{5em} m{5em} m{5em} m{5em} m{5em}}
+    $1$&$2$&$...$&$m-1$&$m$\\
+    $m+1$&$m+2$&$...$&$2m-1$&$2m$\\
+    $2m+1$&$2m+2$&$...$&$3m-1$&$3m$\\
+    $...$&$...$&$...$&$...$&$...$\\
+    $(p-1)m+1$&$(p-1)m+2$&$...$&$pm-1$&$pm$\\
+\end{tabular}
+\end{center}
+易知$gcd(x,m)=gcd(x+km, m)$，所以如果一列的第一个数和$m$互质，那么整列的数都和$m$互质，如果一列的第一个数和$m$ 不互质，那么整列的数和$m$不互质，也就是说整列和$mp$不互质。\\\\
+我们先证明如果$m$和$p$不互质，那么$\phi(mp)=\phi(m)*p$。因为$m$和$p$不互质，所以如果$x$和$m$互质，$x$和$p$ 也互质，所以$x$和$mp$是互质的，也就是说$gcd(x, m)=1\Rightarrow gcd(x, mp)=1$。所以如果一列的第一个数和$m$互质，整列都和$m$互质，所以整列都和$mp$互质。所以全部小于$pm$并且和$mp$互质的数的数量是$\phi(m)p$。\\\\
+然后我们证明如果$m$和$p$互质，$\phi(mp)=\phi(m)*(p-1)$。我们有$\phi(m)$列里面所有的数字都和$m$互质，剩下所有的数和$m$不互质，也就和$mp$不互质。因为$m$和$p$互质，所以每一列至多有一个数和$p$不互质，若不然
+\begin{align*}
+	gcd(k_1m+b,p)\neq1 \Rightarrow gcd(k_1m+b,p)=p \Rightarrow p\mid k_1m+b\\
+	gcd(k_2m+b,p)\neq1 \Rightarrow gcd(k_2m+b,p)=p \Rightarrow p\mid k_2m+b\\
+	\Rightarrow p \mid(k_2-k_1)m
+\end{align*}
+因为$k1-k2<p$，所以$p\mid m$，这和$m$与$p$是矛盾的。\\\\
+我们能证明每一列所有的数模$p$互不同余，若不然
+\begin{align*}
+	k_1m+b&\equiv r\ (\text{mod}\ p)\\
+	k_2m+b&\equiv r\ (\text{mod}\ p)\\
+	\Rightarrow p \mid(k2-k1)m
+\end{align*}
+因为$k1-k2<p$，所以$p\mid m$，这和$m$与$p$是矛盾的。每一列所有的数模$p$互不同余，所以每一列至少有一个数和$p$不互质。结合之前的结论，每一列有且只有一个数和$p$不互质。\\\\
+所以有$\phi(m)*p-\phi(m)$个数$m$和$p$都互质，因为$gcd(x, m)=1, gcd(x, p) \Rightarrow gcd(x, mp)=1$，所以有$\phi(m)*p-\phi(m)$个数字和$mp$互质，也就是说$\phi(mp)=\phi(m)(p-1)$.\\\\
+如果$m=p_1^{\alpha_1}p_2^{\alpha_2}...p_n^{\alpha_n}$，我们可以使用下面的步骤计算$\phi(m)$（通过之前证明的两个结论）。
+\begin{align*}
+	\phi(p_1)&=p_1-1\\
+	\phi(p_1p_2)&=(p_1-1)(p_2-1)\\
+	...\\
+	\phi(p_1p_2...p_n)&=(p_1-1)(p_2-1)...(p_n-1)\\
+	\phi(p_1^2p_2...p_n)&=p_1(p_1-1)(p_2-1)...(p_n-1)\\
+	...\\
+	\phi(p_1^{\alpha_1}p_2...p_n)&=p_1^{\alpha_1-1}(p_1-1)(p_2-1)...(p_n-1)\\
+	...\\
+	\phi(p_1^{\alpha_1}p_2^{\alpha_2}...p_n)&=p_1^{\alpha_1-1}(p_1-1)p_2^{\alpha_2-1}(p_2-1)...(p_n-1)\\
+	...\\
+	\phi(p_1^{\alpha_1}p_2^{\alpha_2}...p_n^{\alpha_n})&=p_1^{\alpha_1-1}(p_1-1)p_2^{\alpha_2-1}(p_2-1)...p_n^{\alpha_n-1}(p_n-1)\\
+	\phi(m)=&\prod_{i=1}^{n}p_i^{\alpha_i-1}(p_i-1) 
+\end{align*}
+\section{问题 8.14}
+\subsection{8.14(a)}
+$3$，因为$3\mid 2^3-2$。
+\subsection{8.14(b)}
+因为$n$是不等于$2$的质数，$n$和$2^{n - 1}$是互质的，通过欧拉定理可知
+\begin{align*}
+	2^{\phi(n)}&\equiv1\ (\text{mod}\ n)\\
+	\Rightarrow 2^{n-1}&\equiv1\ (\text{mod}\ n)\\
+	\Rightarrow 2^n&\equiv2\ (\text{mod}\ n)\\
+	\Rightarrow n&\mid 2^n-2
+\end{align*}
+\subsection{8.14(c)}
+$561=3*11*17$
+\begin{align*}
+	561&=512+32+16+1\\
+	2^{1}&\equiv2\ (\text{mod}\ 561)\\
+	2^{2}&\equiv4\ (\text{mod}\ 561)\\
+	2^{4}&\equiv16\ (\text{mod}\ 561)\\
+	2^{8}&\equiv256\ (\text{mod}\ 561)\\
+	2^{16}&\equiv460\ (\text{mod}\ 561)\\
+	2^{32}&\equiv103\ (\text{mod}\ 561)\\	
+	2^{64}&\equiv511\ (\text{mod}\ 561)\\
+	2^{128}&\equiv256\ (\text{mod}\ 561)\\
+	2^{256}&\equiv460\ (\text{mod}\ 561)\\
+	2^{512}&\equiv103\ (\text{mod}\ 561)\\
+	\Rightarrow 2^{561}=2^{512} * 2^{32} + 2^{16} + 2^{1}&\equiv103 * 103 * 460 * 2\equiv2\ (\text{mod}\ 561)\\
+	\Rightarrow 561 &\mid 2^{561} - 2
+\end{align*}
+\subsection{8.14(d)}
+通过欧拉定理可知
+\begin{align*}
+	2^{\phi(341)}&\equiv1\ (\text{mod}\ 341)\\
+	2^{\phi(11) * \phi(31)}&\equiv1\ (\text{mod}\ 341)\\
+	2^{10*30}&\equiv1\ (\text{mod}\ 341)\\
+	2^{300}&\equiv1\ (\text{mod}\ 341)\\
+\end{align*}
+又
+\begin{align*}
+	2^{40}-1&=(2^{20}+1)(2^{20}-1)\\
+	&=(2^{20}+1)(2^{10}+1)(2^{10}-1)\\
+	&=(2^{20}+1)(2^{10}+1)(2^{5}+1)(2^{5}-1)\\
+	&=(2^{20}+1)(2^{10}+1)*33*31\\
+	&=(2^{20}+1)(2^{10}+1)*3*11*31\\
+	\Rightarrow 2^{40}-1 &\mid 11,  2^{40}-1 \mid 31\\
+	\Rightarrow 2^{40}-1 &\mid 341\\
+	\Rightarrow 2^{40}&\equiv1\ (\text{mod}\ 341)\\
+\end{align*}
+所以
+\begin{align*}
+2^{340}&\equiv1\ (\text{mod}\ 341)\\
+2^{341}&\equiv2\ (\text{mod}\ 341)\\	
+\end{align*}
+
+\section{问题 8.19}
+第$371$天，假设是第$x$天。我们有下列同余方程组，从里面选出四个：
+\begin{multicols}{2}
+\begin{align*} 
+	x&\equiv1\ (\text{mod}\ 2)\\
+	x&\equiv2\ (\text{mod}\ 3)\\
+	x&\equiv3\ (\text{mod}\ 4)\\
+	x&\equiv4\ (\text{mod}\ 1)\\
+	x&\equiv5\ (\text{mod}\ 6)\\
+	x&\equiv6\ (\text{mod}\ 5)\\
+	x&\equiv0\ (\text{mod}\ 7)\\
+\end{align*}
+\columnbreak \\
+\begin{align*}
+	x&\equiv1\ (\text{mod}\ 2)\\
+	x&\equiv2\ (\text{mod}\ 3)\\
+	x&\equiv1\ (\text{mod}\ 5)\\
+	x&\equiv0\ (\text{mod}\ 7)
+\end{align*}
+\end{multicols}
+\noindent 我们先来解右侧的四个方程，通过中国剩余定理可知
+\begin{multicols}{2}
+\begin{align*}
+	M&=m_1m_2m_3=2*3*5*7=210,\\
+	a_1&=1,a_2=2,a_3=1,a_4=0\\
+	x&=a_1t_1M_1+a_2t_2M_2+a_3t_3M_3+a_4t_4M_4+KM\\
+	x&=t_1M/m_1+2t_2M/m_2+t_3M/m_3\\
+	x&=105t_1+140t_2+42t_3+210K\quad(K \in \mathbb{Z})
+\end{align*}
+\columnbreak\\
+\begin{align*}
+	105t_1&\equiv1\ (\text{mod}\ 2)\Rightarrow t_1\equiv1\ (\text{mod}\ 2)\\
+	70t_2&\equiv1\ (\text{mod}\ 3)\Rightarrow t_2\equiv1\ (\text{mod}\ 3)\\
+	42t_3&\equiv1\ (\text{mod}\ 5)\Rightarrow t_3\equiv3\ (\text{mod}\ 5)
+\end{align*}
+\end{multicols}
+\noindent 所以
+\begin{align*}
+	x&=371+210K\quad(K \in \mathbb{Z})
+\end{align*}
+$x$ 已经满足 $x\equiv4\ (\text{mod}\ 1)$。所以还需要$x\equiv3\ (\text{mod}\ 4)$和$x\equiv5\ (\text{mod}\ 6)$，因此
+\begin{align*}
+4\mid 210K+371-3=210K+368\\
+6\mid 210K+371-5=210K+366
+\end{align*}
+因为$6\mid 210K+366$总是成立，$4\mid210K+368 \Rightarrow 2\mid105K$，所以$K$是个偶数，所以最小的$x>0$是$371$.
+\section{问题 8.22}
+\begin{lstlisting}[language=C++]
+int fastPow(int base, int exp, int mod) {
+    if (base == 1) return 1;
+    if (exp == 0) return 1;
+    bool start = false;
+    int ret = base % mod;
+    for (int i = 30; i >= 0; --i) {
+        int mask = 1 << i;
+        if (start) {
+            int square = (((ret % mod) * (ret % mod)) % mod);
+            if (mask & exp) {
+                ret = (square * (base % mod)) % mod;
+            } else {
+                ret = square;
+            }
+        } else if (mask & exp) {
+            start = true;
+        }
+    }
+    return ret;
+}
+\end{lstlisting}
+\section{问题 8.23}
+\begin{lstlisting}[language=C++]
+int gcd (int a, int b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+bool witnessTest(int n, int witness) {
+    if (fastPow(witness, n - 1, n) == 1) return true;
+    else return false;
+}
+
+// Miller Rabin Test for k times
+bool isPrime(int n, int k) {
+    if (n < 2) return false;
+    int counter = k;
+    while (counter) {
+        int witness = random() % 10007;
+        if (gcd(witness, n) == 1) {
+            if (!witnessTest(n, witness)) return false;
+            counter--;
+        }
+    }
+    return true;
+}
+\end{lstlisting}
+\end{document}
