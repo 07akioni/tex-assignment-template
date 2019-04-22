@@ -651,17 +651,6 @@ Computing Machinery]
 \or % sigchi-a
 \fi
 \RequirePackage{iftex}
-\ifPDFTeX
-\input{glyphtounicode}
-\pdfglyphtounicode{f_f}{FB00}
-\pdfglyphtounicode{f_f_i}{FB03}
-\pdfglyphtounicode{f_f_l}{FB04}
-\pdfglyphtounicode{f_i}{FB01}
-\pdfglyphtounicode{t_t}{0074 0074}
-\pdfglyphtounicode{f_t}{0066 0074}
-\pdfglyphtounicode{T_h}{0054 0068}
-\pdfgentounicode=1
-\fi
 \RequirePackage{cmap}
 \newif\if@ACM@newfonts
 \@ACM@newfontstrue
